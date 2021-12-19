@@ -1,4 +1,4 @@
-import Actionbar from "./ActionBar.js";
+import Actionbar from "./Actionbar.js";
 
 class SelectableActionBar extends Actionbar {
 
