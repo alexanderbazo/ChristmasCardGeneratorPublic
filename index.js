@@ -7,7 +7,7 @@ var app;
 
 function init() {
     app = express();
-    app.use("/", express.static("app"));
+    app.use("/", express.static("docs"));
     app.listen(HTTP_PORT, function() {
         console.log("Server started. Opening application in browser ... [Press CTRL + C to stop server]");
         open("http://localhost:8080");
