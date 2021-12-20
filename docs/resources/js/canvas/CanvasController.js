@@ -67,8 +67,8 @@ class CanvasController extends Observable {
   }
 
   clear() {
-    let command = new ClearCommand(this.context, this.model);
-    applyCommand(command);
+    applyCommand(new ClearCommand(this.context, this.model));
+    applyCommand(new FillCommand(this.context, this.model, "#FFF"));
   }
 
   onMouseMovedInCanvas(event) {
