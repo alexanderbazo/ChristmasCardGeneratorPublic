@@ -1,6 +1,6 @@
 import Actionbar from "./ui/Actionbar.js";
 import SelectableActionbar from "./ui/SelectableActionbar.js";
-import Canvas from "./canvas/Canvas.js";
+import CanvasManager from "./canvas/CanvasManager.js";
 import GifManager from "./gif/GifManager.js";
 
 let canvas,
@@ -16,7 +16,7 @@ function init() {
 
 function initCanvas() {
   let canvasEl = document.querySelector("canvas");
-  canvas = new Canvas(canvasEl);
+  canvas = new CanvasManager(canvasEl);
   canvas.addEventListener("canvasModelChanged", onCanvasModelChanged);
 }
 

@@ -52,7 +52,7 @@ class EraseCommand extends CanvasCommand {
   apply() {
     this.context.save();
     this.context.beginPath();
-    this.context.globalCompositeOperation = "destination-out";
+    this.context.fillStyle = "#FFF";
     this.context.arc(this.at.x, this.at.y, this.model.tool.size, 0, Math.PI *
       2, true);
     this.context.fill();

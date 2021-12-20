@@ -9,7 +9,10 @@ function createUniqueID() {
   return last;
 }
 
-class UUID {
+/**
+ * Represents an ID unique in this applications life cycle.
+ */
+class AUID {
 
   constructor() {
     this.id = createUniqueID();
@@ -26,4 +29,4 @@ class UUID {
 
 }
 
-export default UUID;
+export default AUID;

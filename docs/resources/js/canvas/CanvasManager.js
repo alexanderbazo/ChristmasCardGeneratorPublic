@@ -2,8 +2,7 @@ import { Observable, Event } from "../utils/Observable.js";
 import CanvasModel from "./CanvasModel.js";
 import CanvasController from "./CanvasController.js";
 
-
-class Canvas extends Observable {
+class CanvasManager extends Observable {
 
   constructor(el) {
     super();
@@ -55,4 +54,4 @@ class Canvas extends Observable {
 
 }
 
-export default Canvas;
+export default CanvasManager;

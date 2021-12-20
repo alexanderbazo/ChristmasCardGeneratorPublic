@@ -26,12 +26,12 @@ function getCommand(context, model, currentMousePosition, lastMousePosition) {
 
 function applyCommand(command) {
   command.apply();
-  if (!shouldStartNewCommand) {
-    command.smash(history[history.length - 1]);
-    history[history.length - 1] = command;
-  } else {
+  if (shouldStartNewCommand) {
     history.push(command);
     shouldStartNewCommand = false;
+  } else {
+    command.smash(history[history.length - 1]);
+    history[history.length - 1] = command;
   }
 }
 
@@ -84,23 +84,20 @@ class CanvasController extends Observable {
     command = getCommand(this.context, this.model, mousePosition,
       lastMousePosition);
     applyCommand(command);
-    lastMousePosition = {
-      x: mousePosition.x,
-      y: mousePosition.y,
-    };
+    lastMousePosition = mousePosition;
   }
 
-  onMousePressedDownInCanvas(event) {
+  onMousePressedDownInCanvas() {
     active = true;
   }
 
-  onMouseReleasedInCanvas(event) {
+  onMouseReleasedInCanvas() {
     active = false;
     shouldStartNewCommand = true;
     lastMousePosition = undefined;
   }
 
-  onMouseLeftCanvas(event) {
+  onMouseLeftCanvas() {
     active = false;
     shouldStartNewCommand = true;
     lastMousePosition = undefined;
