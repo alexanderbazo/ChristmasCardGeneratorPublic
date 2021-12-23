@@ -13,6 +13,7 @@ class CanvasTool {
       type: this.type,
       size: this.lineWidth || this.radius,
       lineCap: this.lineCap,
+      lineJoin: this.lineJoin,
     };
   }
 
@@ -22,11 +23,17 @@ export let Brush = new CanvasTool("brush", [{
     name: "lineCap",
     value: "round",
   }, {
+    name: "lineJoin",
+    value: "round",
+  }, {
     name: "lineWidth",
     value: 10,
   }]),
   Pencil = new CanvasTool("pencil", [{
     name: "lineCap",
+    value: "round",
+  }, {
+    name: "lineJoin",
     value: "round",
   }, {
     name: "lineWidth",

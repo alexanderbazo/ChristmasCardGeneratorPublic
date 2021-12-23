@@ -35,6 +35,7 @@ class DrawCommand extends CanvasCommand {
     this.context.lineTo(this.to.x, this.to.y);
     this.context.strokeStyle = this.model.color.css;
     this.context.lineCap = this.model.tool.lineCap;
+    this.context.lineJoin = this.model.tool.lineJoin;
     this.context.lineWidth = this.model.tool.size;
     this.context.stroke();
     this.context.closePath();
