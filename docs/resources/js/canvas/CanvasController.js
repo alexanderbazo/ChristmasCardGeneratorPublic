@@ -1,3 +1,4 @@
+import { Brush, Pencil, Eraser } from "./CanvasTools.js";
 import { Observable, Event } from "../utils/Observable.js";
 import {
   DrawCommand,
@@ -27,11 +28,11 @@ function getInCanvasCoordinates(event, canvas) {
 }
 
 function getCommand(context, model, currentMousePosition, lastMousePosition) {
-  if (model.tool.type === "brush" || model.tool.type === "pencil") {
+  if (model.tool.type === Brush.type || model.tool.type === Pencil.type) {
     return new DrawCommand(context, model, lastMousePosition,
       currentMousePosition);
   }
-  if (model.tool.type === "eraser") {
+  if (model.tool.type === Eraser.type) {
     return new EraseCommand(context, model, currentMousePosition);
   }
   return undefined;
