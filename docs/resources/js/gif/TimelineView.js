@@ -3,6 +3,27 @@ import { Observable, Event } from "../utils/Observable.js";
 const FRAME_TEMPLATE = document.querySelector("#frame-template").innerHTML
   .trim();
 
+class RemoveFrameButtonClickedEvent extends Event {
+
+  constructor(frameId) {
+    super("removeFrameButtonClicked", {
+      id: frameId,
+    });
+  }
+
+}
+
+class FrameDelaySelectedEvent extends Event {
+
+  constructor(frameId, frameDelay) {
+    super("frameDelaySelected", {
+      id: frameId,
+      delay: frameDelay,
+    });
+  }
+
+}
+
 function createViewFromFrame(context, frame) {
   let frameEl = document.createElement("div");
   frameEl.innerHTML = FRAME_TEMPLATE;
@@ -19,19 +40,14 @@ function createViewFromFrame(context, frame) {
 }
 
 function onRemoveFrameButtonClicked(id) {
-  this.notifyAll(new Event("removeFrameButtonClicked", {
-    id: id,
-  }));
+  this.notifyAll(new RemoveFrameButtonClickedEvent(id));
 }
 
 function onFrameDelaySelected(id, event) {
   if (!event.target.classList.contains("time")) {
     return;
   }
-  this.notifyAll(new Event("frameDelaySelected", {
-    id: id,
-    delay: event.target.getAttribute("data-delay"),
-  }));
+  this.notifyAll(new FrameDelaySelectedEvent(id, event.target.getAttribute("data-delay")));
 }
 
 class TimelineView extends Observable {

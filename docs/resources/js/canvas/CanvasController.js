@@ -1,10 +1,19 @@
 import { Observable, Event } from "../utils/Observable.js";
-import { DrawCommand, EraseCommand, ClearCommand, FillCommand } from "./CanvasCommand.js";
+import { DrawCommand, EraseCommand, ClearCommand,
+  FillCommand } from "./CanvasCommand.js";
 
 let history = [],
   active = false,
   shouldStartNewCommand = true,
   lastMousePosition;
+
+class HistoryChangedEvent extends Event {
+
+  constructor() {
+    super("historyChanged");
+  }
+
+}
 
 function getInCanvasCoordinates(event, canvas) {
   return {
@@ -43,10 +52,14 @@ class CanvasController extends Observable {
     this.canvas.width = el.clientWidth;
     this.canvas.height = el.clientHeight;
     this.context = this.canvas.getContext("2d");
-    this.canvas.addEventListener("mousemove", (event) => this.onMouseMovedInCanvas(event)); 
-    this.canvas.addEventListener("mousedown", (event) => this.onMousePressedDownInCanvas(event));
-    this.canvas.addEventListener("mouseup", (event) => this.onMouseReleasedInCanvas(event));
-    this.canvas.addEventListener("mouseleave", (event) => this.onMouseLeftCanvas(event));
+    this.canvas.addEventListener("mousemove", (event) => this
+      .onMouseMovedInCanvas(event));
+    this.canvas.addEventListener("mousedown", (event) => this
+      .onMousePressedDownInCanvas(event));
+    this.canvas.addEventListener("mouseup", (event) => this
+      .onMouseReleasedInCanvas(event));
+    this.canvas.addEventListener("mouseleave", (event) => this
+      .onMouseLeftCanvas(event));
     applyCommand(new FillCommand(this.context, this.model, "#FFF"));
   }
 
@@ -63,7 +76,7 @@ class CanvasController extends Observable {
       return;
     }
     history.pop().undo();
-    this.notifyAll(new Event("historyChanged"));
+    this.notifyAll(new HistoryChangedEvent());
   }
 
   clear() {

@@ -1,47 +1,21 @@
+import { Brush } from "./CanvasTools.js";
+import { Colors } from "./CanvasColors.js";
 import { Observable, Event } from "../utils/Observable.js";
 
-const COLORS = [{
-    name: "green",
-    css: "rgb(9, 85, 34)",
-  }, {
-    name: "yellow",
-    css: "rgb(245, 162, 42)",
-  }, {
-    name: "red",
-    css: "rgb(219, 40, 42)",
-  }, {
-    name: "cream",
-    css: "rgb(255, 220, 206)",
-  }, {
-    name: "blue",
-    css: "rgb(132, 204, 186)",
-  }, {
-    name: "gold",
-    css: "rgb(255, 198, 77)",
-  }],
-  TOOLS = [{
-    type: "brush",
-    lineCap: "round",
-    lineWidth: 10,
-  }, {
-    type: "pencil",
-    lineCap: "round",
-    lineWidth: 5,
-  }, {
-    type: "eraser",
-    radius: 10,
-  }];
+class ModelChangedEvent extends Event {
+
+  constructor(model) {
+    super("modelChanged", createModelRepresentation(model));
+  }
+
+}
 
 function createModelRepresentation(model) {
   return {
-    tool: {
-      type: model.tool.type,
-      size: model.tool.lineWidth || model.tool.radius,
-      lineCap: model.tool.lineCap,
-    },
+    tool: model.tool.getRepresentation(),
     color: {
       name: model.color.name,
-      css: model.color.css,
+      css: model.color.toCSS(),
     },
   };
 }
@@ -53,30 +27,20 @@ class CanvasModel extends Observable {
   }
 
   init() {
-    this.color = COLORS[0];
-    this.tool = TOOLS[0];
-    this.notifyAll(new Event("modelChanged", createModelRepresentation(this)));
+    this.color = Colors[0];
+    this.tool = Brush;
+    this.notifyAll(new ModelChangedEvent(this));
   }
 
-  setTool(toolType) {
-    let tool = TOOLS.find((tool) => tool.type === toolType);
-    if (tool !== undefined) {
-      this.tool = tool;
-      this.notifyAll(new Event("modelChanged", createModelRepresentation(this)));
-    }
+  setTool(tool) {
+    this.tool = tool;
+    this.notifyAll(new ModelChangedEvent(this));
   }
 
   shiftColor() {
-    let newColorIndex = COLORS.findIndex((color) => color.name === this
-      .color
-      .name) + 1;
-    if (newColorIndex > COLORS.length - 1) {
-      newColorIndex = 0;
-    }
-    this.color = COLORS[newColorIndex];
-    this.notifyAll(new Event("modelChanged", createModelRepresentation(this)));
+    this.color = this.color.next();
+    this.notifyAll(new ModelChangedEvent(this));
   }
-
 
 }
 

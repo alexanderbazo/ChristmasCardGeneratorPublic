@@ -2,6 +2,14 @@
 import { Observable, Event } from "../utils/Observable.js";
 import AUID from "../utils/AUID.js";
 
+class GifCreatedEvent extends Event {
+
+  constructor(gif) {
+    super("gifCreated", gif);
+  }
+
+}
+
 const DEFAULTS = {
   delay: 100,
   numberOfWorkers: 2,
@@ -77,7 +85,7 @@ class GifCreator extends Observable {
     }
     createGif(this.frames).then((gif) => {
       this.gif = gif;
-      this.notifyAll(new Event("gifCreated", gif));
+      this.notifyAll(new GifCreatedEvent(gif));
     });
   }
 

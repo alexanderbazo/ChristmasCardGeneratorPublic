@@ -1,5 +1,6 @@
-import { Observable, Event } from "../utils/Observable.js";
+import { Observable } from "../utils/Observable.js";
 import CanvasModel from "./CanvasModel.js";
+import { Brush, Pencil, Eraser } from "./CanvasTools.js";
 import CanvasController from "./CanvasController.js";
 
 class CanvasManager extends Observable {
@@ -15,7 +16,7 @@ class CanvasManager extends Observable {
 
   onModelChanged(event) {
     this.controller.setModel(event.data);
-    this.notifyAll(new Event("canvasModelChanged", event.data));
+    this.notifyAll(event);
   }
 
   undo() {
@@ -37,15 +38,15 @@ class CanvasManager extends Observable {
   }
 
   useBrush() {
-    this.model.setTool("brush");
+    this.model.setTool(Brush);
   }
 
   usePencil() {
-    this.model.setTool("pencil");
+    this.model.setTool(Pencil);
   }
 
   useEraser() {
-    this.model.setTool("eraser");
+    this.model.setTool(Eraser);
   }
 
   changeColor() {

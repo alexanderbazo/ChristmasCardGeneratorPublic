@@ -1,5 +1,5 @@
-import Actionbar from "./ui/Actionbar.js";
-import SelectableActionbar from "./ui/SelectableActionbar.js";
+import * as Actions from "./ui/Action.js";
+import { Actionbar, SelectableActionbar } from "./ui/Actionbar.js";
 import CanvasManager from "./canvas/CanvasManager.js";
 import GifManager from "./gif/GifManager.js";
 
@@ -17,16 +17,16 @@ function init() {
 function initCanvas() {
   let canvasEl = document.querySelector("canvas");
   canvas = new CanvasManager(canvasEl);
-  canvas.addEventListener("canvasModelChanged", onCanvasModelChanged);
+  canvas.addEventListener("modelChanged", onCanvasModelChanged);
 }
 
 function initItembars() {
   let actionbarEl = document.querySelector(".actions"),
     toolbarEl = document.querySelector(".toolbar");
   actionbar = new Actionbar(actionbarEl);
-  actionbar.addEventListener("action", onActionSelected);
+  actionbar.addEventListener("action", onAction);
   toolbar = new SelectableActionbar(toolbarEl);
-  toolbar.addEventListener("action", onToolSelected);
+  toolbar.addEventListener("action", onAction);
 }
 
 function initGifGenerator() {
@@ -40,41 +40,35 @@ function onCanvasModelChanged(event) {
   toolbar.setSelectedTool(event.data.tool.type);
 }
 
-function onActionSelected(event) {
-  switch (event.data) {
-    case "undo":
+function onAction(event) {
+  let action = event.data;
+  switch (action.actionType) {
+    case Actions.CHANGE_COLOR_ACTION:
+      canvas.changeColor();
+      break;
+    case Actions.USE_BRUSH_ACTION:
+      canvas.useBrush();
+      break;
+    case Actions.USE_PENCIL_ACTION:
+      canvas.usePencil();
+      break;
+    case Actions.USE_ERASER_ACTION:
+      canvas.useEraser();
+      break;
+    case Actions.UNDO_ACTION:
       canvas.undo();
       break;
-    case "clear":
-      canvas.clear();
-      break;
-    case "save":
+    case Actions.SAVE_FRAME_ACTION:
       canvas.getImage().then((image) => gif.addFrame(image));
       break;
-    case "preview":
+    case Actions.CLEAR_CANVAS_ACTION:
+      canvas.clear();
+      break;
+    case Actions.SHOW_PREVIEW_ACTION:
       gif.togglePreview();
       break;
     default:
-      return;
-  }
-}
-
-function onToolSelected(event) {
-  switch (event.data) {
-    case "color":
-      canvas.changeColor();
       break;
-    case "brush":
-      canvas.useBrush();
-      break;
-    case "pencil":
-      canvas.usePencil();
-      break;
-    case "eraser":
-      canvas.useEraser();
-      break;
-    default:
-      return;
   }
 }
 
