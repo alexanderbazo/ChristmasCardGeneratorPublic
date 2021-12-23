@@ -47,7 +47,8 @@ function onFrameDelaySelected(id, event) {
   if (!event.target.classList.contains("time")) {
     return;
   }
-  this.notifyAll(new FrameDelaySelectedEvent(id, event.target.getAttribute("data-delay")));
+  this.notifyAll(new FrameDelaySelectedEvent(id, event.target.getAttribute(
+    "data-delay")));
 }
 
 class TimelineView extends Observable {

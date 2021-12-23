@@ -1,6 +1,10 @@
 import { Observable, Event } from "../utils/Observable.js";
-import { DrawCommand, EraseCommand, ClearCommand,
-  FillCommand } from "./CanvasCommand.js";
+import {
+  DrawCommand,
+  EraseCommand,
+  ClearCommand,
+  FillCommand
+} from "./CanvasCommand.js";
 
 let history = [],
   active = false,
