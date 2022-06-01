@@ -3,6 +3,7 @@ import CanvasModel from "./CanvasModel.js";
 import { Brush, Pencil, Eraser } from "./CanvasTools.js";
 import CanvasController from "./CanvasController.js";
 
+//TODO 4 | Manager verwaltet den Canvas
 class CanvasManager extends Observable {
 
   constructor(el) {
@@ -10,10 +11,12 @@ class CanvasManager extends Observable {
     this.model = new CanvasModel();
     this.model.addEventListener("modelChanged", this.onModelChanged.bind(
       this));
+    //TODO 15 | Controller setzt auf Basis der aktuellen Konfiguration konkrete Zeichenoperationen um
     this.controller = new CanvasController(el);
     this.model.init();
   }
 
+  //TODO 14 | Änderungen am Model (Konfiguration) werden an Controller weitergegeben
   onModelChanged(event) {
     this.controller.setModel(event.data);
     this.notifyAll(event);
@@ -37,6 +40,7 @@ class CanvasManager extends Observable {
     });
   }
 
+  //TODO 5 | Öffentliche Methoden zum Ändern der aktuellen Canvas-Konfiguration
   useBrush() {
     this.model.setTool(Brush);
   }

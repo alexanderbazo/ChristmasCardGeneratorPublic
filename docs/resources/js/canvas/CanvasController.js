@@ -4,7 +4,7 @@ import {
   DrawCommand,
   EraseCommand,
   ClearCommand,
-  FillCommand
+  FillCommand,
 } from "./CanvasCommand.js";
 
 let history = [],
@@ -27,6 +27,7 @@ function getInCanvasCoordinates(event, canvas) {
   };
 }
 
+//TODO 19 | Auswahl der Zeichenoperation
 function getCommand(context, model, currentMousePosition, lastMousePosition) {
   if (model.tool.type === Brush.type || model.tool.type === Pencil.type) {
     return new DrawCommand(context, model, lastMousePosition,
@@ -38,8 +39,10 @@ function getCommand(context, model, currentMousePosition, lastMousePosition) {
   return undefined;
 }
 
+//TODO 20 | Anwenden der Zeichenoperation
 function applyCommand(command) {
   command.apply();
+  //TODO 21 | Unterscheidung von einzelnen und kontinuierlichen Operationen
   if (shouldStartNewCommand) {
     history.push(command);
     shouldStartNewCommand = false;
@@ -57,6 +60,7 @@ class CanvasController extends Observable {
     this.canvas.width = el.clientWidth;
     this.canvas.height = el.clientHeight;
     this.context = this.canvas.getContext("2d");
+    //TODO 16 | Interaktion der Nutzer*innen wird abgefangen
     this.canvas.addEventListener("mousemove", (event) => this
       .onMouseMovedInCanvas(event));
     this.canvas.addEventListener("mousedown", (event) => this
@@ -89,6 +93,7 @@ class CanvasController extends Observable {
     applyCommand(new FillCommand(this.context, this.model, "#FFF"));
   }
 
+  //TODO 17 | In den Callback-Methoden werden aus den Eingabe-Events Zeichenoperationen erzeugt
   onMouseMovedInCanvas(event) {
     let command, mousePosition;
     if (!active) {
@@ -99,6 +104,7 @@ class CanvasController extends Observable {
       return;
     }
     mousePosition = getInCanvasCoordinates(event, this.canvas);
+    //TODO 18 | Auf Basis der aktuellen Konfiguration wird eine konkrete Zeichenoperation ausgewählt und angewendet
     command = getCommand(this.context, this.model, mousePosition,
       lastMousePosition);
     applyCommand(command);

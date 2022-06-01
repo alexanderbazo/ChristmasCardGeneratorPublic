@@ -1,5 +1,7 @@
+//TODO 21 | Repräsentation einer einzelnen Zeichenoperation auf dem Canvas
 class CanvasCommand {
 
+  //TODO 22 | Konstruktor erhält alle Informationen zum Ausführen der Operation
   constructor(context, model) {
     this.context = context;
     this.precondition = this.context.getImageData(0, 0, this.context.canvas
@@ -7,20 +9,24 @@ class CanvasCommand {
     this.model = model;
   }
 
+  //TODO 24 | Operation wird rückgängig gemacht
   undo() {
     this.context.putImageData(this.precondition, 0, 0);
   }
 
+  //TODO 23 | Operation wird angewendet
   apply() {
     throw new Error("Not implemented");
   }
 
+  //TODO 24 | Operation wird mit nachfolgender Operation verbunden
   smash(command) {
     this.precondition = command.precondition;
   }
 
 }
 
+//TODO 25 | Zeichnen
 class DrawCommand extends CanvasCommand {
 
   constructor(context, model, from, to) {
@@ -30,6 +36,7 @@ class DrawCommand extends CanvasCommand {
   }
 
   apply() {
+    //TODO 3 | Teaser: Hier wird gezeichnet
     this.context.beginPath();
     this.context.moveTo(this.from.x, this.from.y);
     this.context.lineTo(this.to.x, this.to.y);
@@ -43,6 +50,7 @@ class DrawCommand extends CanvasCommand {
 
 }
 
+//TODO 26 | Radieren
 class EraseCommand extends CanvasCommand {
 
   constructor(context, model, at) {
@@ -63,6 +71,7 @@ class EraseCommand extends CanvasCommand {
 
 }
 
+//TODO 27 | Löschen
 class ClearCommand extends CanvasCommand {
 
   apply() {
@@ -71,6 +80,7 @@ class ClearCommand extends CanvasCommand {
   }
 }
 
+//TODO 28 | Füllen
 class FillCommand extends CanvasCommand {
 
   constructor(context, model, color) {

@@ -1,3 +1,4 @@
+//TODO 11 | Abstrakte Repräsentation möglicher Zeichenoperationen als Werkzeug
 class CanvasTool {
 
   constructor(type, properties) {
@@ -8,6 +9,7 @@ class CanvasTool {
     Object.freeze(this);
   }
 
+  //TODO 12 | Mapping der konkreten Canvas-Parameter für dieses Werkzeug
   getRepresentation() {
     return {
       type: this.type,
@@ -19,6 +21,7 @@ class CanvasTool {
 
 }
 
+//TODO 13 | Festlegen der verfügbaren Werkzeuge
 export let Brush = new CanvasTool("brush", [{
     name: "lineCap",
     value: "round",

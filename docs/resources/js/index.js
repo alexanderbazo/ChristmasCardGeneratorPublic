@@ -15,8 +15,10 @@ function init() {
 }
 
 function initCanvas() {
+  // TODO: 1 | Zugriff auf Canvas-Element
   let canvasEl = document.querySelector("canvas");
   canvas = new CanvasManager(canvasEl);
+  // TODO: 2 | Event-basierte Kommunikation im Browser
   canvas.addEventListener("modelChanged", onCanvasModelChanged);
 }
 

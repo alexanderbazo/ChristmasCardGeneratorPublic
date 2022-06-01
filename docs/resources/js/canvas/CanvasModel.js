@@ -20,6 +20,7 @@ function createModelRepresentation(model) {
   };
 }
 
+//TODO 6 | Model bündelt alle relevanten Informationen zur aktuellen Zeichenkonfiguration des Canvas
 class CanvasModel extends Observable {
 
   constructor() {
@@ -27,8 +28,8 @@ class CanvasModel extends Observable {
   }
 
   init() {
-    this.color = Colors[0];
-    this.tool = Brush;
+    this.color = Colors[0]; //TODO 7 | Welche Farbe soll verwendet werden?
+    this.tool = Brush; //TODO 8 | Welches Werkzeug soll verwendet werden?
     this.notifyAll(new ModelChangedEvent(this));
   }
 

@@ -1,5 +1,6 @@
 const COLORS = [];
 
+//TODO 9 | Repräsentation von Farben  im Canvas
 class Color {
 
   constructor(name, rgbValues) {
@@ -24,6 +25,7 @@ class Color {
   }
 }
 
+//TODO 10 | Set an Farben, dass im Canvas verwendet werden kann
 COLORS.push(new Color("green", [9, 85, 34]));
 COLORS.push(new Color("yellow", [245, 162, 42]));
 COLORS.push(new Color("red", [219, 40, 42]));
